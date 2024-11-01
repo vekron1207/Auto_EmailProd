@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Sender</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body class="bg-light">
+    <div class="container my-5">
+        <h1 class="text-center">Auto Email Sender</h1>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="csvFile" class="form-label">Select CSV file:</label>
+                <input type="file" id="csvFile" name="csvFile" accept=".csv" class="form-control" required>
+            </div>
+            <button type="button" id="sendButton" class="btn btn-primary">Send Emails</button>
+        </form>
+        
+        <div id="progressContainer" class="mt-4" style="display: none;">
+            <p>Sending emails...</p>
+            <div class="progress">
+                <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
+            </div>
+            <ul id="statusList" class="mt-3 list-group"></ul>
+        </div>
+
+        <div id="downloadContainer" class="mt-4" style="display: none;">
+            <a id="downloadLink" href="/download-report" class="btn btn-success">Download Email Report</a>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#sendButton').click(function () {
+                let formData = new FormData($('#uploadForm')[0]);
+                
+                $('#progressContainer').show();
+                $('#statusList').empty();
+                $('#progressBar').css('width', '0%').text('0%');
+                $('#downloadContainer').hide();
+
+                $.ajax({
+                    url: '/send-emails',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        let results = data.results;
+                        results.forEach((result, index) => {
+                            let percentage = ((index + 1) / results.length) * 100;
+                            $('#progressBar').css('width', percentage + '%').text(Math.round(percentage) + '%');
+                            
+                            // Display each result properly
+                            $('#statusList').append(`<li class="list-group-item">Email sent to ${result.email}: ${result.status}</li>`);
+                        });
+                        $('#downloadContainer').show();  // Show download link
+                    },
+                    error: function (xhr) {
+                        alert("Error: " + xhr.responseJSON.error);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
