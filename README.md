@@ -20,6 +20,15 @@ This script allows you to send emails to multiple recipients using details provi
 ### 2. **Install VS Code** (Optional, but recommended)
    - Download and install [Visual Studio Code](https://code.visualstudio.com/).
 
+### 3. **Create a SendGrid Account**
+   - Go to [SendGrid](https://sendgrid.com/).
+   - Click **"Sign Up for Free"** and follow the steps to create an account.
+   - After logging in:
+     1. Navigate to **Settings** > **API Keys**.
+     2. Click **"Create API Key"**.
+     3. Name the API key (e.g., `email_script_key`) and set permissions to **Full Access**.
+     4. Copy the generated API key and keep it safe (you'll use it later in the `config.json` file).
+
 ---
 
 ## Setup Instructions
@@ -38,15 +47,16 @@ This script allows you to send emails to multiple recipients using details provi
    - Open the `config.json` file and replace the placeholder values with your own:
      ```json
      {
-       "SMTP_SERVER": "smtp.example.com",
+       "SMTP_SERVER": "smtp.sendgrid.net",
        "SMTP_PORT": 465,
-       "SMTP_USERNAME": "your_smtp_username",
-       "SMTP_PASSWORD": "your_smtp_password",
+       "SMTP_USERNAME": "apikey",
+       "SMTP_PASSWORD": "your_sendgrid_api_key",
        "SENDER_EMAIL": "your_email@example.com",
        "EMAIL_SUBJECT": "Your Subject Here",
        "EMAIL_BODY": "Your Email Body Here"
      }
      ```
+   - Replace `your_sendgrid_api_key` with the API key you generated earlier.
    - Save the file.
 
 ### 4. Prepare the CSV File
@@ -79,13 +89,14 @@ This script allows you to send emails to multiple recipients using details provi
 ---
 
 ## Notes
-- Ensure your SMTP server credentials are correct. If using Gmail, you may need to enable "App Passwords" in your Google account settings.
+- Ensure your SendGrid API key is correct and active.
+- If using Gmail as an alternative, you'll need to enable "App Passwords" in your Google account settings.
 - If any issues arise, check the terminal for error messages.
 
 ---
 
 ## Contributing
-If you find any issues or have suggestions for improvements, feel free to open an issue or submit a pull request. Or reach to me on varun.kashyap1207@gmail.com
+If you find any issues or have suggestions for improvements, feel free to open an issue or submit a pull request. Or reach out to me at varun.kashyap1207@gmail.com
 
 ---
 
