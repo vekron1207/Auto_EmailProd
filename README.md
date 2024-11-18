@@ -1,54 +1,93 @@
-# Email Script
+# Email Sending Script
 
-This Python script allows you to send emails to recipients listed in a CSV file. It reads the email addresses, usernames, and other details from the CSV file and sends customized emails to each recipient.
+This script allows you to send emails to multiple recipients using details provided in a CSV file. It's beginner-friendly, and the setup process is straightforward.
+
+---
+
+## Features
+- Send emails to a list of recipients from a CSV file.
+- Generates an Excel report of email delivery statuses.
+- Easy to configure and run.
+
+---
 
 ## Prerequisites
 
-- Python 3.x installed on your system
-- CSV file containing the recipient details (e.g., `emails.csv`)
-- SMTP server credentials or an SMTP service account for sending emails
+### 1. **Install Python**
+   - Download and install Python 3.x from the [official website](https://www.python.org/downloads/). 
+   - During installation, ensure you check **"Add Python to PATH"**.
 
-## Installation
+### 2. **Install VS Code** (Optional, but recommended)
+   - Download and install [Visual Studio Code](https://code.visualstudio.com/).
 
-1. Clone the repository or download the script file (`script.py`) to your local machine.
+---
 
-2. Install the required dependencies by running the following command:
-   
-```
-pip install smtplib
-```
+## Setup Instructions
 
-## Configuration
+### 1. Clone or Download the Repository
+   - Clone the repository or download all files (e.g., `app.py`, `emailsender.py`, etc.) to a folder on your local machine.
 
-1. Open the `script.py` file in a text editor.
+### 2. Install Dependencies
+   - Open a terminal or command prompt and navigate to the folder containing the downloaded files.
+   - Install required Python libraries by running the following command:
+     ```
+     pip install flask openpyxl
+     ```
 
-2. Update the SMTP server configuration:
-- Set the `SMTP_SERVER` variable to your SMTP server address.
-- Set the `SMTP_PORT` variable to the appropriate port number for your SMTP server.
-- Set the `SMTP_USERNAME` and `SMTP_PASSWORD` variables to your SMTP server credentials or an SMTP service account.
+### 3. Configure the `config.json` File
+   - Open the `config.json` file and replace the placeholder values with your own:
+     ```json
+     {
+       "SMTP_SERVER": "smtp.example.com",
+       "SMTP_PORT": 465,
+       "SMTP_USERNAME": "your_smtp_username",
+       "SMTP_PASSWORD": "your_smtp_password",
+       "SENDER_EMAIL": "your_email@example.com",
+       "EMAIL_SUBJECT": "Your Subject Here",
+       "EMAIL_BODY": "Your Email Body Here"
+     }
+     ```
+   - Save the file.
 
-3. Customize the email template:
-- Modify the `EMAIL_TEMPLATE` variable to match your desired email content.
-- You can use placeholders like `{uname}` and `{first_name}` to dynamically replace the recipient's username and first name in the email template.
+### 4. Prepare the CSV File
+   - Create a CSV file (e.g., `emails.csv`) containing a list of email addresses. For example:
+     ```
+     email
+     user1@example.com
+     user2@example.com
+     ```
+   - Place this file in the same folder as the script.
 
-## Usage
+---
 
-1. Prepare your CSV file:
-- Create a CSV file with the following columns: `uname`, `first_name`, `last_name`, and `email`.
-- Enter the recipient details in each row.
+## Running the Script
 
-2. Run the script:
-- Open a terminal or command prompt and navigate to the directory containing the `script.py` file.
-- Execute the following command:
-  ```
-  python script.py
-  ```
-- The script will read the CSV file, send emails to the recipients, and display a confirmation message for each email sent.
+### 1. Start the Application
+   - Run the following command to start the Flask app:
+     ```
+     python app.py
+     ```
+   - Open your browser and go to `http://127.0.0.1:5000`.
+
+### 2. Send Emails
+   - Upload your `emails.csv` file via the web interface.
+   - The app will send emails to the listed recipients and display the results.
+
+### 3. Download the Report
+   - Once the emails are sent, click the **Download Report** button on the web interface to download an Excel file with the email delivery status.
+
+---
+
+## Notes
+- Ensure your SMTP server credentials are correct. If using Gmail, you may need to enable "App Passwords" in your Google account settings.
+- If any issues arise, check the terminal for error messages.
+
+---
 
 ## Contributing
+If you find any issues or have suggestions for improvements, feel free to open an issue or submit a pull request. Or reach to me on varun.kashyap1207@gmail.com
 
-Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request on the repository.
+---
 
 ## License
-
 This project is licensed under the [MIT License](LICENSE).
