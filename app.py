@@ -16,10 +16,16 @@ email_results = []
 
 @app.route('/')
 def index():
+    """
+    Render the index.html template.
+    """
     return render_template('index.html')
 
 @app.route('/send-emails', methods=['POST'])
 def send_emails():
+    """
+    Handle the email-sending process after the user uploads a CSV file.
+    """
     global email_results
     if 'csvFile' not in request.files:
         return jsonify({"error": "No file uploaded"}), 400
@@ -38,6 +44,9 @@ def send_emails():
 
 @app.route('/download-report')
 def download_report():
+    """
+    Generate and download an Excel report of the email-sending results.
+    """
     global email_results
     
     # Create an Excel workbook and add the data dynamically
@@ -46,11 +55,11 @@ def download_report():
     worksheet.title = "Email Report"
     
     # Add headers
-    worksheet.append(["First Name", "Email", "Status"])
+    worksheet.append(["Email", "Status"])
 
     # Add email results to the worksheet
     for result in email_results:
-        worksheet.append([result["first_name"], result["email"], result["status"]])
+        worksheet.append([result["email"], result["status"]])
 
     # Save the workbook to a BytesIO stream
     output = BytesIO()
@@ -58,7 +67,12 @@ def download_report():
     output.seek(0)
 
     # Send the file as a downloadable attachment
-    return send_file(output, as_attachment=True, download_name="email_report.xlsx", mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    return send_file(
+        output,
+        as_attachment=True,
+        download_name="email_report.xlsx",
+        mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
 
 if __name__ == '__main__':
     app.run(debug=True)
